@@ -75,3 +75,9 @@ main{
 footer .color-texto{
     font-weight: 800;
 }
+
+.formLogin{
+    background-color: #ffff;
+    padding: 60px;
+    border-radius: 10px;
+}
