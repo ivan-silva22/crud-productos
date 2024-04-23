@@ -44,6 +44,9 @@
                 <h2 class="display-4">Administrador</h2>
                 <hr>
                 <div class="table-responsive">
+                    <div>
+                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalProducto" >Agregar producto</button>
+                    </div>
                     <table class="table table-striped">
                         <thead>
                           <tr>
@@ -210,6 +213,44 @@
                 </div>
             </article>
         </section>
+        
+        <!-- ventana modal  -->
+        <div class="modal fade" id="modalProducto" tabindex="-1">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Administrador</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form>
+                        <div class="mb-3">
+                            <label for="producto" class="form-label">Producto *</label>
+                            <input type="text" class="form-control" id="producto" placeholder="Aceite girasol Finca Lazo X900cc">
+                        </div>
+                        <div class="mb-3">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Seleccionar una opción</option>
+                                <option value="carniceria">Carniceria</option>
+                                <option value="quesos-fiambres">Quesos y fiambres</option>
+                                <option value="almacen">Almacén</option>
+                                <option value="limpieza-perfumeria">Limpieza y perfumeria</option>
+                                <option value="bazar">Bazar</option>
+                                <option value="bebidas">Bebidas</option>
+                              </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="producto" class="form-label">Precio *</label>
+                            <input type="number" class="form-control" id="precio" placeholder="$2000">
+                        </div>
+                        <div class="mb-3 text-center">
+                            <button type="submit" class="btn btn-danger w-25">Guardar</button>
+                        </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
     </main>
     <footer></footer>
     <script
