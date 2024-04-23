@@ -1,0 +1,11 @@
+.nav{
+    flex-direction: column;
+}
+
+.contenido-principal{
+    display: flex;
+}
+
+.page-link{
+    color: #ff0000 !important;
+}

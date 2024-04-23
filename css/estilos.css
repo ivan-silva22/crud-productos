@@ -59,6 +59,15 @@ main{
     border-radius: 10px;
 }
 
+.icono-admin{
+    font-size: 25px;
+    color: #ffff00;
+}
+
+.icono-admin:hover{
+    color: #ffff;
+}
+
 .texto-info{
     color: #fff;
 }
