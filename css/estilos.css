@@ -21,10 +21,48 @@ main{
     justify-content: space-around;
 }
 
-.menu > h3{
-    font-weight: 700;
+.menu  h3{
+    font-weight: 800;
+    color: #fff;
+}
+
+.menu p{
+    font-weight: 500;
 }
 
 .color-texto{
     color: #ffff00;
+}
+
+.card{
+    width: 240px;
+    margin: 0 auto;
+}
+
+.card-precio{
+    display: inline;
+    text-align: center;
+    padding: 2px 8px;
+    border-radius: 10px;
+    color: #fff;
+    background-color: #000;
+}
+
+.row{
+    margin: 0 auto;
+}
+
+.img-logo-tarjeta{
+    width: 150px;
+    background-color: #fff;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.texto-info{
+    color: #fff;
+}
+
+footer .color-texto{
+    font-weight: 800;
 }
