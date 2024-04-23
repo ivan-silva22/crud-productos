@@ -1,0 +1,30 @@
+body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: rgb(252,251,251);  
+    background: linear-gradient(0deg, rgba(252,251,251,1) 0%, rgba(251,5,5,1) 49%);
+}
+
+main{
+    flex-grow: 1;
+    
+}
+
+.img-logo{
+    width: 300px;
+    border-radius: 50%;
+}
+
+.menu{
+    display: flex;
+    justify-content: space-around;
+}
+
+.menu > h3{
+    font-weight: 700;
+}
+
+.color-texto{
+    color: #ffff00;
+}
