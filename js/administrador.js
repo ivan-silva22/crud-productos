@@ -25,6 +25,9 @@ function crearProducto(){
             categoria.value,
             precio.value
         );
+        listaProductos.push(nuevoProducto);
+        localStorage.setItem('listaProductos', JSON.stringify(listaProductos));
+        console.log(listaProductos)
         console.log(nuevoProducto)
     }else{
         let alerta = document.getElementById('alerta');
