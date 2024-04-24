@@ -36,3 +36,28 @@ export function validarPrecio(precio){
         return false;
     }
 }
+
+export function validarFecha(dia){
+    if(dia >= 1 && dia <= 31){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+export function validarAnio(anio){
+    if(anio > 2000 || anio <= (new Date().getFullYear() + 1)){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+export function validarMes(mes){
+    console.log(mes)
+    if(mes === 'enero' || mes === 'febrero' || mes === 'marzo' || mes === 'abril' || mes === 'mayo' || mes === 'junio' || mes === 'julio' || mes === 'agosto' || mes === 'septiembre' || mes === 'octubre' || mes === 'noviembre' || mes === 'diciembre'){
+        return true;
+    }else{
+        return false;
+    }
+}

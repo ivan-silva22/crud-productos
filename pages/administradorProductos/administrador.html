@@ -30,8 +30,10 @@
             <aside class="col-sm-12 col-md-2 menu">
                 <div class="mt-5">
                   <hr>
-                    <p>Ofertas validas desde el 22 al 28 de Abril</p>
-                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalFechaOfertas" >Cambiar fecha</button>
+                    <div id="mostrarFecha">
+                      
+                    </div>
+                    <button type="button" class="btn btn-warning" id="btnModalFecha"  >Cambiar fecha</button>
                     <hr>
                 </div>
             </aside>
@@ -131,20 +133,21 @@
                 <div class="modal-body">
                   <form id="formFechaValida">
                     <div class="mb-3">
-                        <label for="fechaDesde" class="form-label">Desde el día*</label>
+                        <label for="fechaDesde" class="form-label">Desde el día *</label>
                         <input type="number" class="form-control" id="fechaDesde" placeholder="20">
                     </div>
                     <div class="mb-3">
-                        <label for="fechaHasta" class="form-label">Hasta el día*</label>
+                        <label for="fechaHasta" class="form-label">Hasta el día *</label>
                         <input type="number" class="form-control" id="fechaHasta" placeholder="20">
                     </div>
                     <div class="mb-3">
-                        <label for="anio" class="form-label">Año*</label>
+                        <label for="anio" class="form-label">Año *</label>
                         <input type="number" class="form-control" id="anio" placeholder="2024">
                     </div>
                     <div class="mb-3">
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Seleccionar un mes</option>
+                        <label for="mes" class="form-label">Mes *</label>
+                        <select class="form-select" aria-label="Default select example" id="mes">
+                            <option selected value="">Seleccionar un mes</option>
                             <option value="enero">Enero</option>
                             <option value="febrero">Febrero</option>
                             <option value="marzo">Marzo</option>
@@ -159,6 +162,7 @@
                             <option value="diciembre">Diciembre</option>
                           </select>
                     </div>
+                    <div class="alert alert-danger d-none" id="aletaFecha"></div>
                     <div class="mb-3 text-center">
                         <button type="submit" class="btn btn-danger w-25">Guardar</button>
                     </div>

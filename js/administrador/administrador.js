@@ -1,5 +1,6 @@
 import Producto from "../classProducto.js";
-import { sumarioValidacion } from "../validaciones.js";
+import Fecha from "../classFecha.js";
+import { sumarioValidacion, sumarioValidacionFecha } from "../validaciones.js";
 
 let formProducto = document.getElementById('formProducto')
 let nombre = document.getElementById('producto'),
@@ -7,8 +8,16 @@ let nombre = document.getElementById('producto'),
     imagen = document.getElementById('imagen'),
     precio = document.getElementById('precio');
 let listaProductos = JSON.parse(localStorage.getItem('listaProductos')) || [];
+let listaFecha = JSON.parse(localStorage.getItem('listaFecha')) || [];
 let modalProducto = new bootstrap.Modal(document.getElementById('modalProducto'));
+let modalFechaOfertas = new bootstrap.Modal(document.getElementById('modalFechaOfertas'));
 let btnModalProducto = document.getElementById('btnModalProducto');
+let btnModalFecha = document.getElementById('btnModalFecha');
+let formFechaValida = document.getElementById('formFechaValida');
+let fechaDesde = document.getElementById('fechaDesde');
+let fechaHasta = document.getElementById('fechaHasta');
+let anio = document.getElementById('anio');
+let mes = document.getElementById('mes');
 
 
 
@@ -25,8 +34,20 @@ if(listaProductos.length !== 0){
 
 formProducto.addEventListener('submit', prepararFormulario);
 btnModalProducto.addEventListener('click', abrirModalProduto);
+btnModalFecha.addEventListener('click', abrirModalFecha)
+formFechaValida.addEventListener('submit', prepararFormularioFecha);
 
-cargaInicial()
+cargaInicial();
+mostrarFecha();
+
+function mostrarFecha(){
+    let mostrarFecha = document.getElementById('mostrarFecha');
+    if(listaFecha.length > 0){
+        listaFecha.map((fecha) => mostrarFecha.innerHTML = `<p>Ofertas validas desde el ${fecha.fechaInicio} al ${fecha.fechaFin} de ${fecha.mes} del ${fecha.anio}</p>`)
+        
+    }
+    
+}
 
 function cargaInicial(){
     if(listaProductos.length > 0){
@@ -65,6 +86,12 @@ function prepararFormulario(e){
     console.log('hola')
 }
 
+function prepararFormularioFecha(e){
+    e.preventDefault();
+    crearFecha();
+    console.log('hola')
+}
+
 function crearProducto(){
     let resumenValidaciones = sumarioValidacion(nombre.value, categoria.value, imagen.value, precio.value);
     console.log(resumenValidaciones)
@@ -95,6 +122,34 @@ function crearProducto(){
     
 }
 
+function crearFecha(){
+    console.log(anio.value)
+    console.log(mes.value)
+    let resumen = sumarioValidacionFecha(fechaDesde.value, fechaHasta.value, anio.value, mes.value);
+    if(resumen.length === 0){
+        const nuevaFecha = new Fecha(
+            fechaDesde.value,
+            fechaHasta.value,
+            anio.value,
+            mes.value
+        )
+        listaFecha.push(nuevaFecha);
+        localStorage.setItem('listaFecha', JSON.stringify(listaFecha));
+        formFechaValida.reset();
+        Swal.fire({
+            title: "Exito!",
+            text: "Se guardo correctamente la fecha!",
+            icon: "success"
+        });
+        console.log(nuevaFecha)
+    }else{
+        let aletaFecha = document.getElementById('aletaFecha');
+        aletaFecha.innerHTML = resumen;
+        aletaFecha.className = 'alert alert-danger';
+    }
+
+}
+
 
 function guardarEnLocalStorage(){
     localStorage.setItem('listaProductos', JSON.stringify(listaProductos));
@@ -104,6 +159,9 @@ function abrirModalProduto(){
     modalProducto.show();
 }
 
+function abrirModalFecha(){
+    modalFechaOfertas.show();
+}
 
 function limpiarFormularioProducto(){
     formProducto.reset();
