@@ -16,7 +16,8 @@ function prepararFormulario(e){
 }
 
 function crearProducto(){
-    let resumenValidaciones = sumarioValidacion(nombreProducto);
+    let resumenValidaciones = sumarioValidacion(nombre.value, categoria.value, precio.value);
+    console.log(resumenValidaciones)
     if(resumenValidaciones.length === 0){
         const nuevoProducto = new Producto(
             undefined,
@@ -24,8 +25,11 @@ function crearProducto(){
             categoria.value,
             precio.value
         );
-        listaProductos.push(nuevoProducto);
-        console.log(listaProductos)
+        console.log(nuevoProducto)
+    }else{
+        let alerta = document.getElementById('alerta');
+        alerta.innerHTML = resumenValidaciones;
+        alerta.className = 'alert alert-danger';
     }
     
 }
