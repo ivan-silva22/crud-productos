@@ -11,6 +11,7 @@ let modalProducto = new bootstrap.Modal(document.getElementById('modalProducto')
 let btnModalProducto = document.getElementById('btnModalProducto');
 
 
+
 if(listaProductos.length !== 0){
     listaProductos = listaProductos.map((producto) => new Producto(
         producto.codigo,
@@ -30,6 +31,10 @@ cargaInicial()
 function cargaInicial(){
     if(listaProductos.length > 0){
         listaProductos.map((producto, index) => crearFila(producto, index + 1));
+    }else{
+        let mensaje = document.getElementById('mensaje');
+        mensaje.innerHTML = '<h3 class="display-4">No hay datos</h3>'
+        mensaje.className = 'text-center mt-5';
     }
 }
 
@@ -50,6 +55,10 @@ function crearFila(producto, index){
                 </button>
             </td>
         </tr>`;
+    }
+    if(index > 10){
+        let paginacion = document.getElementById('paginacion');
+        paginacion.className = ''
     }    
 }
 
