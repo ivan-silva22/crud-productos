@@ -5,7 +5,7 @@ let formProducto = document.getElementById('formProducto')
 let nombre = document.getElementById('producto'),
     categoria = document.getElementById('categoria'),
     precio = document.getElementById('precio');
-let listaProductos = [];
+let listaProductos = JSON.parse(localStorage.getItem('listaProductos')) || [];
 
 formProducto.addEventListener('submit', prepararFormulario);
 
