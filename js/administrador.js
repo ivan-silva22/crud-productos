@@ -4,6 +4,7 @@ import { sumarioValidacion } from "./validaciones.js";
 let formProducto = document.getElementById('formProducto')
 let nombre = document.getElementById('producto'),
     categoria = document.getElementById('categoria'),
+    imagen = document.getElementById('imagen'),
     precio = document.getElementById('precio');
 let listaProductos = JSON.parse(localStorage.getItem('listaProductos')) || [];
 let modalProducto = new bootstrap.Modal(document.getElementById('modalProducto'));
@@ -15,6 +16,7 @@ if(listaProductos.length !== 0){
         producto.codigo,
         producto.nombre,
         producto.categoria,
+        producto.imagen,
         producto.precio
     ))
 }
@@ -23,6 +25,34 @@ if(listaProductos.length !== 0){
 formProducto.addEventListener('submit', prepararFormulario);
 btnModalProducto.addEventListener('click', abrirModalProduto);
 
+cargaInicial()
+
+function cargaInicial(){
+    if(listaProductos.length > 0){
+        listaProductos.map((producto, index) => crearFila(producto, index + 1));
+    }
+}
+
+function crearFila(producto, index){
+    let tbody = document.getElementById('tbody');
+    tbody.innerHTML += `<tr>
+    <th scope="row">${index}</th>
+    <td>${producto.nombre}</td>
+    <td>${producto.categoria}</td>
+    <td>$${producto.precio}</td>
+    <td>
+        <button title="Editar" type="button" class="btn btn-warning">
+            <i class="bi bi-pencil-square"></i>
+        </button>
+        <button title="Eliminar" type="button" class="btn btn-danger">
+            <i class="bi bi-trash3-fill"></i>
+        </button>
+    </td>
+  </tr>`
+    console.log(tbody)
+}
+
+
 function prepararFormulario(e){
     e.preventDefault();
     crearProducto();
@@ -30,18 +60,20 @@ function prepararFormulario(e){
 }
 
 function crearProducto(){
-    let resumenValidaciones = sumarioValidacion(nombre.value, categoria.value, precio.value);
+    let resumenValidaciones = sumarioValidacion(nombre.value, categoria.value, imagen.value, precio.value);
     console.log(resumenValidaciones)
     if(resumenValidaciones.length === 0){
         const nuevoProducto = new Producto(
             undefined,
             nombre.value,
             categoria.value,
+            imagen.value,
             precio.value
         );
         listaProductos.push(nuevoProducto);
         guardarEnLocalStorage();
         limpiarFormularioProducto();
+        crearFila(nuevoProducto, listaProductos.length)
         Swal.fire({
             title: "Exito!",
             text: "Se creo correctamente el producto!",

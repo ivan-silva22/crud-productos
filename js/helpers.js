@@ -18,6 +18,15 @@ export function validarCategoria(texto){
     }
 }
 
+export function validarURLImagen(imagen){
+    let patron = /\.(jpg|jpeg|webp)$/;
+    if(patron.test(imagen)){
+        return true;
+    }else{
+        return false;
+    }
+}
+
 export function validarPrecio(precio){
     if(precio >= 1 && precio <= 100000){
         console.log('dato correcto')

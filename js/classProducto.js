@@ -2,11 +2,13 @@ export default class Producto{
     #codigo;
     #nombre;
     #categoria;
+    #imagen;
     #precio;
-    constructor(codigo = uuidv4(), nombre, categoria, precio){ 
+    constructor(codigo = uuidv4(), nombre, categoria, imagen, precio){ 
         this.#codigo = codigo;
         this.#nombre = nombre;
         this.#categoria = categoria;
+        this.#imagen = imagen;
         this.#precio = precio;
     }
     get codigo(){
@@ -30,6 +32,13 @@ export default class Producto{
         this.#categoria = nuevaCategoria;
     }
 
+    get imagen(){
+        return this.#imagen;
+    }
+    set imagen(nuevaImagen){
+        this.#imagen = nuevaImagen;
+    }
+
     get precio(){
         return this.#precio;
     }
@@ -42,6 +51,7 @@ export default class Producto{
             codigo: this.#codigo,
             nombre: this.#nombre,
             categoria: this.#categoria,
+            imagen: this.#imagen,
             precio: this.#precio 
         }
     }
