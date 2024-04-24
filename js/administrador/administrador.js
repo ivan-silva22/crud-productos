@@ -1,5 +1,5 @@
-import Producto from "./classProducto.js";
-import { sumarioValidacion } from "./validaciones.js";
+import Producto from "../classProducto.js";
+import { sumarioValidacion } from "../validaciones.js";
 
 let formProducto = document.getElementById('formProducto')
 let nombre = document.getElementById('producto'),
@@ -34,22 +34,23 @@ function cargaInicial(){
 }
 
 function crearFila(producto, index){
-    let tbody = document.getElementById('tbody');
-    tbody.innerHTML += `<tr>
-    <th scope="row">${index}</th>
-    <td>${producto.nombre}</td>
-    <td>${producto.categoria}</td>
-    <td>$${producto.precio}</td>
-    <td>
-        <button title="Editar" type="button" class="btn btn-warning">
-            <i class="bi bi-pencil-square"></i>
-        </button>
-        <button title="Eliminar" type="button" class="btn btn-danger">
-            <i class="bi bi-trash3-fill"></i>
-        </button>
-    </td>
-  </tr>`
-    console.log(tbody)
+    if(index <= 10){
+        let tbody = document.getElementById('tbody');
+        tbody.innerHTML += `<tr>
+            <th scope="row">${index}</th>
+            <td>${producto.nombre}</td>
+            <td>${producto.categoria}</td>
+            <td>$${producto.precio}</td>
+            <td>
+                <button title="Editar" type="button" class="btn btn-warning">
+                    <i class="bi bi-pencil-square"></i>
+                </button>
+                <button title="Eliminar" type="button" class="btn btn-danger">
+                    <i class="bi bi-trash3-fill"></i>
+                </button>
+            </td>
+        </tr>`;
+    }    
 }
 
 
