@@ -3,7 +3,7 @@ export default class Producto{
     #nombre;
     #categoria;
     #precio;
-    constructor(codigo, nombre, categoria, precio){
+    constructor(codigo = uuidv4(), nombre, categoria, precio){ 
         this.#codigo = codigo;
         this.#nombre = nombre;
         this.#categoria = categoria;
