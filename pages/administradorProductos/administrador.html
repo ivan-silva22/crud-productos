@@ -40,7 +40,7 @@
                 <hr>
                 <div class="table-responsive">
                     <div>
-                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalProducto" >Agregar producto</button>
+                        <button type="button" class="btn btn-warning" id="btnModalProducto" >Agregar producto</button>
                     </div>
                     <table class="table table-striped">
                         <thead>
@@ -220,6 +220,10 @@
                 <div class="modal-body">
                   <form id="formProducto">
                         <div class="mb-3">
+                         <label for="codigo" class="form-label">Codigo</label>
+                          <input type="text" class="form-control" id="codigo" placeholder="00000001" disabled>
+                        </div>
+                        <div class="mb-3">
                             <label for="producto" class="form-label">Producto *</label>
                             <input type="text" class="form-control" id="producto" placeholder="Aceite girasol Finca Lazo X900cc">
                         </div>
@@ -303,6 +307,7 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/uuid@latest/dist/umd/uuidv4.min.js"></script>
     <script type="module" src="../../js/administrador.js"></script>
 </body>
