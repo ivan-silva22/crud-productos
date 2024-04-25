@@ -1,13 +1,24 @@
 let listaProductos = JSON.parse(localStorage.getItem('listaProductos')) || [];
+let listaFecha = JSON.parse(localStorage.getItem('listaFecha')) || [];
+let fechaOferta = document.getElementById('fechaOferta');
 
 console.log(listaProductos)
 
 cargaInicial();
+cargarFecha();
 
 function cargaInicial(){
     if(listaProductos.length > 0){
         listaProductos.map((producto) => crearCard(producto));
     }
+}
+
+function cargarFecha(){
+  if(listaFecha.length > 0){
+    listaFecha.map((fecha) => {
+      fechaOferta.innerHTML = `<p class="color-texto fs-5">Validas desde ${fecha.fechaInicio} al ${fecha.fechaFin} de ${fecha.mes} del ${fecha.anio}</p>`
+    })
+  }
 }
 
 function crearCard(producto){

@@ -8,7 +8,7 @@ let nombre = document.getElementById('producto'),
     imagen = document.getElementById('imagen'),
     precio = document.getElementById('precio');
 let listaProductos = JSON.parse(localStorage.getItem('listaProductos')) || [];
-let listaFecha = JSON.parse(localStorage.getItem('listaFecha')) || [];
+let fecha = JSON.parse(localStorage.getItem('fecha')) || {};
 let modalProducto = new bootstrap.Modal(document.getElementById('modalProducto'));
 let modalFechaOfertas = new bootstrap.Modal(document.getElementById('modalFechaOfertas'));
 let btnModalProducto = document.getElementById('btnModalProducto');
@@ -18,6 +18,7 @@ let fechaDesde = document.getElementById('fechaDesde');
 let fechaHasta = document.getElementById('fechaHasta');
 let anio = document.getElementById('anio');
 let mes = document.getElementById('mes');
+let btnEliminarTodo = document.getElementById('btnEliminarTodo');
 
 
 
@@ -36,22 +37,22 @@ formProducto.addEventListener('submit', prepararFormulario);
 btnModalProducto.addEventListener('click', abrirModalProduto);
 btnModalFecha.addEventListener('click', abrirModalFecha)
 formFechaValida.addEventListener('submit', prepararFormularioFecha);
+btnEliminarTodo.addEventListener('click', eliminarTodosPoductos);
 
-cargaInicial();
-mostrarFecha();
-
-function mostrarFecha(){
-    let mostrarFecha = document.getElementById('mostrarFecha');
-    if(listaFecha.length > 0){
-        listaFecha.map((fecha) => mostrarFecha.innerHTML = `<p>Ofertas validas desde el ${fecha.fechaInicio} al ${fecha.fechaFin} de ${fecha.mes} del ${fecha.anio}</p>`)
-        
-    }
-    
-}
+cargaInicial(); 
 
 function cargaInicial(){
     if(listaProductos.length > 0){
         listaProductos.map((producto, index) => crearFila(producto, index + 1));
+    }
+    if(fecha !== '' ){
+        console.log(fecha)
+        let mostrarFecha = document.getElementById('mostrarFecha');
+        mostrarFecha.innerHTML = `<p>Ofertas validas desde ${fecha.fechaInicio} al ${fecha.fechaFin} de ${fecha.mes} del ${fecha.anio}</p>`;
+    }else{
+        console.log(fecha)
+        let mostrarFecha = document.getElementById('mostrarFecha');
+        mostrarFecha.innerHTML = `<p>No hay datos </p>`;
     }
 }
 
@@ -67,7 +68,7 @@ function crearFila(producto, index){
                 <button title="Editar" type="button" class="btn btn-warning">
                     <i class="bi bi-pencil-square"></i>
                 </button>
-                <button title="Eliminar" type="button" class="btn btn-danger">
+                <button title="Eliminar" type="button" class="btn btn-danger" onClick='borrarProducto("${producto.codigo}")'>
                     <i class="bi bi-trash3-fill"></i>
                 </button>
             </td>
@@ -123,8 +124,6 @@ function crearProducto(){
 }
 
 function crearFecha(){
-    console.log(anio.value)
-    console.log(mes.value)
     let resumen = sumarioValidacionFecha(fechaDesde.value, fechaHasta.value, anio.value, mes.value);
     if(resumen.length === 0){
         const nuevaFecha = new Fecha(
@@ -133,9 +132,10 @@ function crearFecha(){
             anio.value,
             mes.value
         )
-        listaFecha.push(nuevaFecha);
-        localStorage.setItem('listaFecha', JSON.stringify(listaFecha));
+        fecha = nuevaFecha;
+        localStorage.setItem('fecha', JSON.stringify(fecha));
         formFechaValida.reset();
+        modalFechaOfertas.hide();
         Swal.fire({
             title: "Exito!",
             text: "Se guardo correctamente la fecha!",
@@ -165,4 +165,62 @@ function abrirModalFecha(){
 
 function limpiarFormularioProducto(){
     formProducto.reset();
+}
+
+function eliminarTodosPoductos(){
+    if(listaProductos.length > 0){
+        Swal.fire({
+            title: "¿Esta seguro que desea eliminar todos los productos?",
+            text: "No se puede revertir este proceso!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Borrar",
+            cancelButtonText: "Cancelar"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                listaProductos = [];
+                localStorage.setItem('listaProductos', JSON.stringify(listaProductos));
+                let tbody = document.getElementById('tbody');
+                tbody.innerHTML = ''
+              Swal.fire({
+                title: "Exito!",
+                text: "Todos los productos fueron eliminados.",
+                icon: "success"
+              });
+            }
+          });
+    }else{
+        Swal.fire({
+            title: "Error!",
+            text: "No hay productos para eliminar!",
+            icon: "error"
+          });
+    }
+    
+}
+
+window.borrarProducto = (id) =>{
+    Swal.fire({
+        title: "¿Esta seguro que desea eliminar el producto?",
+        text: "No se puede revertir este proceso",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Borrar",
+        cancelButtonText: "Cancelar"
+      }).then((result) =>{
+        if(result.isConfirmed){
+            console.log(id)
+            let posicionProducto = listaProductos.findIndex((producto) => producto.codigo === id);
+            console.log(posicionProducto)
+            listaProductos.splice(posicionProducto, 1);
+            localStorage.setItem('listaProductos', JSON.stringify(listaProductos));
+            let tbody = document.getElementById('tbody');
+            console.log(tbody.children[posicionProducto])
+            tbody.removeChild(tbody.children[posicionProducto]);
+        }
+    })
 }
