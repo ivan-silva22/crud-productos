@@ -3,22 +3,25 @@ import Fecha from "../classFecha.js";
 import { sumarioValidacion, sumarioValidacionFecha } from "../validaciones.js";
 
 let formProducto = document.getElementById('formProducto')
-let nombre = document.getElementById('producto'),
+let codigo = document.getElementById('codigo'),
+    nombre = document.getElementById('producto'),
     categoria = document.getElementById('categoria'),
     imagen = document.getElementById('imagen'),
     precio = document.getElementById('precio');
 let listaProductos = JSON.parse(localStorage.getItem('listaProductos')) || [];
-let fecha = JSON.parse(localStorage.getItem('fecha')) || {};
 let modalProducto = new bootstrap.Modal(document.getElementById('modalProducto'));
-let modalFechaOfertas = new bootstrap.Modal(document.getElementById('modalFechaOfertas'));
+let btnEliminarTodo = document.getElementById('btnEliminarTodo');
 let btnModalProducto = document.getElementById('btnModalProducto');
-let btnModalFecha = document.getElementById('btnModalFecha');
-let formFechaValida = document.getElementById('formFechaValida');
-let fechaDesde = document.getElementById('fechaDesde');
-let fechaHasta = document.getElementById('fechaHasta');
+let bandera = true;
+
+let fechaInicio = document.getElementById('fechaDesde');
+let fechaFin = document.getElementById('fechaHasta');
 let anio = document.getElementById('anio');
 let mes = document.getElementById('mes');
-let btnEliminarTodo = document.getElementById('btnEliminarTodo');
+let fecha = JSON.parse(localStorage.getItem('fecha')) ||{};
+let modalFechaOfertas = new bootstrap.Modal(document.getElementById('modalFechaOfertas'));
+let btnActualizarFecha = document.getElementById('btnActualizarFecha');
+let formFechaValida = document.getElementById('formFechaValida');
 
 
 
@@ -35,24 +38,16 @@ if(listaProductos.length !== 0){
 
 formProducto.addEventListener('submit', prepararFormulario);
 btnModalProducto.addEventListener('click', abrirModalProduto);
-btnModalFecha.addEventListener('click', abrirModalFecha)
-formFechaValida.addEventListener('submit', prepararFormularioFecha);
 btnEliminarTodo.addEventListener('click', eliminarTodosPoductos);
+
+formFechaValida.addEventListener('submit', prepararFormularioFecha);
+btnActualizarFecha.addEventListener('click', abrirModalFecha);
 
 cargaInicial(); 
 
 function cargaInicial(){
     if(listaProductos.length > 0){
         listaProductos.map((producto, index) => crearFila(producto, index + 1));
-    }
-    if(fecha !== '' ){
-        console.log(fecha)
-        let mostrarFecha = document.getElementById('mostrarFecha');
-        mostrarFecha.innerHTML = `<p>Ofertas validas desde ${fecha.fechaInicio} al ${fecha.fechaFin} de ${fecha.mes} del ${fecha.anio}</p>`;
-    }else{
-        console.log(fecha)
-        let mostrarFecha = document.getElementById('mostrarFecha');
-        mostrarFecha.innerHTML = `<p>No hay datos </p>`;
     }
 }
 
@@ -65,7 +60,7 @@ function crearFila(producto, index){
             <td>${producto.categoria}</td>
             <td>$${producto.precio}</td>
             <td>
-                <button title="Editar" type="button" class="btn btn-warning">
+                <button title="Editar" type="button" class="btn btn-warning" onClick='prepararForm("${producto.codigo}")' >
                     <i class="bi bi-pencil-square"></i>
                 </button>
                 <button title="Eliminar" type="button" class="btn btn-danger" onClick='borrarProducto("${producto.codigo}")'>
@@ -83,15 +78,14 @@ function crearFila(producto, index){
 
 function prepararFormulario(e){
     e.preventDefault();
-    crearProducto();
+    if(bandera){
+        crearProducto();
+    }else{
+        editarProducto();
+    }
     console.log('hola')
 }
 
-function prepararFormularioFecha(e){
-    e.preventDefault();
-    crearFecha();
-    console.log('hola')
-}
 
 function crearProducto(){
     let resumenValidaciones = sumarioValidacion(nombre.value, categoria.value, imagen.value, precio.value);
@@ -123,33 +117,6 @@ function crearProducto(){
     
 }
 
-function crearFecha(){
-    let resumen = sumarioValidacionFecha(fechaDesde.value, fechaHasta.value, anio.value, mes.value);
-    if(resumen.length === 0){
-        const nuevaFecha = new Fecha(
-            fechaDesde.value,
-            fechaHasta.value,
-            anio.value,
-            mes.value
-        )
-        fecha = nuevaFecha;
-        localStorage.setItem('fecha', JSON.stringify(fecha));
-        formFechaValida.reset();
-        modalFechaOfertas.hide();
-        Swal.fire({
-            title: "Exito!",
-            text: "Se guardo correctamente la fecha!",
-            icon: "success"
-        });
-        console.log(nuevaFecha)
-    }else{
-        let aletaFecha = document.getElementById('aletaFecha');
-        aletaFecha.innerHTML = resumen;
-        aletaFecha.className = 'alert alert-danger';
-    }
-
-}
-
 
 function guardarEnLocalStorage(){
     localStorage.setItem('listaProductos', JSON.stringify(listaProductos));
@@ -159,9 +126,7 @@ function abrirModalProduto(){
     modalProducto.show();
 }
 
-function abrirModalFecha(){
-    modalFechaOfertas.show();
-}
+
 
 function limpiarFormularioProducto(){
     formProducto.reset();
@@ -223,4 +188,95 @@ window.borrarProducto = (id) =>{
             tbody.removeChild(tbody.children[posicionProducto]);
         }
     })
+}
+
+
+window.prepararForm = (id) =>{
+    let buscarProducto = listaProductos.find((producto) => producto.codigo === id);
+    abrirModalProduto();
+    codigo.value = buscarProducto.codigo;
+    nombre.value = buscarProducto.nombre;
+    categoria.value = buscarProducto.categoria;
+    imagen.value = buscarProducto.imagen;
+    precio.value = buscarProducto.precio;
+    bandera = false;
+}
+
+function editarProducto(){
+    let posicionProducto = listaProductos.findIndex((producto) => producto.codigo === codigo.value);
+    let resumen = sumarioValidacion(nombre.value, categoria.value, imagen.value, precio.value);
+    if(resumen.length === 0){
+        listaProductos[posicionProducto].nombre = nombre.value;
+        listaProductos[posicionProducto].categoria = categoria.value;
+        listaProductos[posicionProducto].imagen = imagen.value;
+        listaProductos[posicionProducto].precio = precio.value;
+        guardarEnLocalStorage();
+        modalProducto.hide();
+        let tbody = document.getElementById('tbody');
+        tbody.children[posicionProducto].children[1].innerHTML = nombre.value;
+        tbody.children[posicionProducto].children[2].innerHTML = categoria.value;
+        tbody.children[posicionProducto].children[3].innerHTML = precio.value;
+    }else{
+        let alerta = document.getElementById('alerta');
+        alerta.innerHTML = resumen;
+        alerta.className = 'alert alert-danger';
+    }
+}
+
+
+
+
+function prepararFormularioFecha(e){
+    e.preventDefault()
+    crearFecha();
+}
+
+console.log(fecha)
+cargaInicialFecha();
+
+function cargaInicialFecha(){
+    if(Object.keys(fecha). length > 0){
+        cargarFecha(fecha);
+    }else{
+        let mostrarFecha = document.getElementById('mostrarFecha');
+        mostrarFecha.innerHTML = `<p>No hay datos cargados</p>`;
+    }
+}
+
+function cargarFecha(fecha){
+    let mostrarFecha = document.getElementById('mostrarFecha');
+    mostrarFecha.innerHTML = `<p>Ofertas validas desde ${fecha.fechaInicio} al ${fecha.fechaFin} de ${fecha.mes} del ${fecha.anio}</p>`
+    console.log(fecha)
+}
+
+
+function crearFecha(){
+    console.log('hola')
+    const nuevaFecha = new Fecha(
+        fechaInicio.value,
+        fechaFin.value,
+        anio.value,
+        mes.value
+    )
+    fecha = nuevaFecha
+    localStorage.setItem('fecha', JSON.stringify(fecha));
+    formFechaValida.reset();
+    cargarFecha(nuevaFecha);
+    Swal.fire({
+        title: "Exito!",
+        text: "Se creo correctamente la fecha de las ofertas!",
+        icon: "success"
+    });
+    cerrarModalFecha();
+    console.log(fecha)
+}
+
+
+
+function abrirModalFecha(){
+    modalFechaOfertas.show();
+}
+
+function cerrarModalFecha(){
+    modalFechaOfertas.hide();
 }
