@@ -52,10 +52,9 @@ function cargaInicial(){
 }
 
 function crearFila(producto, index){
-    if(index <= 10){
-        let tbody = document.getElementById('tbody');
+    let tbody = document.getElementById('tbody');
         tbody.innerHTML += `<tr>
-            <th scope="row">${index}</th>
+            <th scope="row" id='numeroFila' >${index}</th>
             <td>${producto.nombre}</td>
             <td>${producto.categoria}</td>
             <td>$${producto.precio}</td>
@@ -67,12 +66,7 @@ function crearFila(producto, index){
                     <i class="bi bi-trash3-fill"></i>
                 </button>
             </td>
-        </tr>`;
-    }
-    if(index > 10){
-        let paginacion = document.getElementById('paginacion');
-        paginacion.className = ''
-    }    
+        </tr>`;   
 }
 
 
@@ -107,8 +101,6 @@ function crearProducto(){
             text: "Se creo correctamente el producto!",
             icon: "success"
         });
-        console.log(listaProductos)
-        console.log(nuevoProducto)
     }else{
         let alerta = document.getElementById('alerta');
         alerta.innerHTML = resumenValidaciones;
@@ -178,14 +170,13 @@ window.borrarProducto = (id) =>{
         cancelButtonText: "Cancelar"
       }).then((result) =>{
         if(result.isConfirmed){
-            console.log(id)
             let posicionProducto = listaProductos.findIndex((producto) => producto.codigo === id);
-            console.log(posicionProducto)
             listaProductos.splice(posicionProducto, 1);
             localStorage.setItem('listaProductos', JSON.stringify(listaProductos));
             let tbody = document.getElementById('tbody');
-            console.log(tbody.children[posicionProducto])
             tbody.removeChild(tbody.children[posicionProducto]);
+            tbody.innerHTML = '';
+            listaProductos.map((producto, index) => crearFila(producto, index + 1))    
         }
     })
 }
@@ -215,7 +206,7 @@ function editarProducto(){
         let tbody = document.getElementById('tbody');
         tbody.children[posicionProducto].children[1].innerHTML = nombre.value;
         tbody.children[posicionProducto].children[2].innerHTML = categoria.value;
-        tbody.children[posicionProducto].children[3].innerHTML = precio.value;
+        tbody.children[posicionProducto].children[3].innerHTML = '$' + precio.value;
     }else{
         let alerta = document.getElementById('alerta');
         alerta.innerHTML = resumen;
@@ -224,14 +215,12 @@ function editarProducto(){
 }
 
 
-
-
 function prepararFormularioFecha(e){
     e.preventDefault()
     crearFecha();
 }
 
-console.log(fecha)
+
 cargaInicialFecha();
 
 function cargaInicialFecha(){
@@ -246,7 +235,7 @@ function cargaInicialFecha(){
 function cargarFecha(fecha){
     let mostrarFecha = document.getElementById('mostrarFecha');
     mostrarFecha.innerHTML = `<p>Ofertas validas desde ${fecha.fechaInicio} al ${fecha.fechaFin} de ${fecha.mes} del ${fecha.anio}</p>`
-    console.log(fecha)
+    
 }
 
 
