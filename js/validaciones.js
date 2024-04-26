@@ -34,3 +34,11 @@ export function sumarioValidacionFecha(fechaDesde, fechaHasta, anio, mes){
     }
     return resumen;
 }
+
+export function validacionUsuario(nombre){
+    let resumen = '';
+    if(!validarCantidadCaracteres(nombre, 2, 100)){
+        resumen += 'El nombre debe tener entre 2 y 100 caracteres <br>';
+    }
+    return resumen;
+}

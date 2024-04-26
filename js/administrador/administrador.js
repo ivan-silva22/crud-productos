@@ -1,5 +1,6 @@
 import Producto from "../classProducto.js";
 import Fecha from "../classFecha.js";
+import Usuario from "../classUsuario.js";
 import { sumarioValidacion, sumarioValidacionFecha } from "../validaciones.js";
 
 let formProducto = document.getElementById('formProducto')
@@ -22,6 +23,8 @@ let fecha = JSON.parse(localStorage.getItem('fecha')) ||{};
 let modalFechaOfertas = new bootstrap.Modal(document.getElementById('modalFechaOfertas'));
 let btnActualizarFecha = document.getElementById('btnActualizarFecha');
 let formFechaValida = document.getElementById('formFechaValida');
+
+let btnCerrarSesion = document.getElementById('btn-cerrar-sesion');
 
 
 
