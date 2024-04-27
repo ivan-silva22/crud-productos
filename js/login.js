@@ -1,20 +1,17 @@
+import crearUsuario from "./administrador/adminUsuario.js";
 let usuario = JSON.parse(localStorage.getItem('usuario')) || [];
 let usuarioLogueado = JSON.parse(sessionStorage.getItem('usuarioLogueado')) || [];
 let email = document.getElementById('email');
 let password = document.getElementById('password');
 let formLogin = document.getElementById('formLogin');
 
+crearUsuario();
 
 formLogin.addEventListener('submit', prepararFormLogin);
 
 
-if (!localStorage.getItem('usuario')) {
-    // Datos predeterminados
-    let datos = {usuario};
-    // Guardar los datos predeterminados en localStorage
-    localStorage.setItem('usuario', JSON.stringify(datos));
-  }
 
+console.log(usuario)
 
 
 function prepararFormLogin(e){
