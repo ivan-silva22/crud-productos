@@ -1,24 +1,9 @@
-import Usuario from "./classUsuario.js";
 let usuario = JSON.parse(localStorage.getItem('usuario')) || [];
 let usuarioLogueado = JSON.parse(sessionStorage.getItem('usuarioLogueado')) || [];
 let email = document.getElementById('email');
 let password = document.getElementById('password');
 let formLogin = document.getElementById('formLogin');
 
-crearUsuario();
-
-crearUsuario();
-
-export default function crearUsuario(){
-    const nuevoUsuario = new Usuario(
-        undefined,
-        'admin',
-        'admin@gmail.com',
-        '@dmin_120'
-    )
-    usuario.push(nuevoUsuario);
-    localStorage.setItem('usuario', JSON.stringify(usuario))
-}
 
 formLogin.addEventListener('submit', prepararFormLogin);
 
