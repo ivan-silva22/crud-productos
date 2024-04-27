@@ -14,6 +14,8 @@ function cargaInicial() {
 function cargarFecha() {
   if (fecha !== 0) {
     fechaOferta.innerHTML = `<p class="color-texto fs-5">Validas desde ${fecha.fechaInicio} al ${fecha.fechaFin} de ${fecha.mes} del ${fecha.anio}</p>`;
+  }else{
+    fechaOferta.innerHTML = '<p>No hay datos</p>'
   }
 }
 
