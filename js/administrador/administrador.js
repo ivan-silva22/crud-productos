@@ -272,3 +272,6 @@ function abrirModalFecha(){
 function cerrarModalFecha(){
     modalFechaOfertas.hide();
 }
+
+
+console.log(window.location)

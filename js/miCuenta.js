@@ -6,6 +6,8 @@ let codigo =  document.getElementById('codigo'),
     email = document.getElementById('email'),
     password = document.getElementById('password');
 
+
+
 usuario.map((usuario) => {
     let datosUsuarios = document.getElementById('datos-usuario');
     datosUsuarios.innerHTML = `<p>Nombre: ${usuario.nombre}</p>
@@ -42,3 +44,4 @@ function editarPerfil(){
     datosUsuarios.children[3].innerHTML = email.value;
     datosUsuarios.children[4].innerHTML = password.value;
 }
+

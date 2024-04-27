@@ -1,33 +1,40 @@
-// let usuario = JSON.parse(localStorage.getItem('usuario')) || {};
+import Usuario from "./classUsuario.js";
 
-// let formLogin = document.getElementById('formLogin');
-// let email = document.getElementById('email');
-// let password = document.getElementById('password');
+let usuario = JSON.parse(localStorage.getItem('usuario')) || [];
+let usuarioLogueado = JSON.parse(sessionStorage.getItem('usuarioLogueado')) || [];
+let email = document.getElementById('email');
+let password = document.getElementById('password');
+let formLogin = document.getElementById('formLogin');
 
-// formLogin.addEventListener('submit', prepararForm);
+
+formLogin.addEventListener('submit', prepararFormLogin);
 
 
-// function prepararForm(e){
-//     e.preventDefault();
-//     const buscarUsuario = usuario.some((usuario) => usuario.email === email.value || usuario.password === password.value);
-//     if(buscarUsuario){
-//         Swal.fire({
-//             position: "center",
-//             icon: "success",
-//             title: 'Bienvenido',
-//             showConfirmButton: false,
-//             timer: 1500
-//           });
-//         setTimeout(() => {
-//             window.location.href = window.location.origin + '/pages/administradorProductos/administrador.html'
-//         }, 1500);
-//     }else{
-//         Swal.fire({
-//             position: "center",
-//             icon: "error",
-//             title: 'email o contraseña incorrectos',
-//             showConfirmButton: false,
-//             timer: 1500
-//           });
-//     }
-// }
+function prepararFormLogin(e){
+    e.preventDefault();
+    const usuarioBuscado = usuario.find((usuario) => {
+        if(usuario.email === password.value || usuario.password === password.value){
+            return usuario;
+        }
+    })
+    if(usuarioBuscado !== undefined){
+        Swal.fire({
+            position: "center",
+            icon: "success",
+            title: `Bienvenido`,
+            showConfirmButton: false,
+            timer: 1500
+          });
+        setTimeout(() => {
+            window.location.href = window.location.origin + '/pages/administradorProductos/administrador.html';
+        }, 1500);
+        usuarioLogueado.push(usuarioBuscado);
+        sessionStorage.setItem('usuarioLogueado', JSON.stringify(usuarioLogueado));
+
+    }else{
+        let alert = document.getElementById('alerta');
+        alert.innerHTML = 'El email o contraseña es invalido';
+        alert.className = 'alert alert-danger '
+    }
+    console.log(usuarioBuscado)
+}
