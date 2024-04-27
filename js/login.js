@@ -1,4 +1,4 @@
-import crearUsuario from "./administrador/adminUsuario.js";
+
 let usuario = JSON.parse(localStorage.getItem('usuario')) || [];
 let usuarioLogueado = JSON.parse(sessionStorage.getItem('usuarioLogueado')) || [];
 let email = document.getElementById('email');
