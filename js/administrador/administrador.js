@@ -1,6 +1,5 @@
 import Producto from "../classProducto.js";
 import Fecha from "../classFecha.js";
-import Usuario from "../classUsuario.js";
 import { sumarioValidacion, sumarioValidacionFecha } from "../validaciones.js";
 
 let formProducto = document.getElementById('formProducto')
@@ -23,9 +22,6 @@ let fecha = JSON.parse(localStorage.getItem('fecha')) ||{};
 let modalFechaOfertas = new bootstrap.Modal(document.getElementById('modalFechaOfertas'));
 let btnActualizarFecha = document.getElementById('btnActualizarFecha');
 let formFechaValida = document.getElementById('formFechaValida');
-
-let btnCerrarSesion = document.getElementById('btn-cerrar-sesion');
-
 
 
 if(listaProductos.length !== 0){
@@ -86,7 +82,6 @@ function prepararFormulario(e){
 
 function crearProducto(){
     let resumenValidaciones = sumarioValidacion(nombre.value, categoria.value, imagen.value, precio.value);
-    console.log(resumenValidaciones)
     if(resumenValidaciones.length === 0){
         const nuevoProducto = new Producto(
             undefined,
@@ -243,7 +238,6 @@ function cargarFecha(fecha){
 
 
 function crearFecha(){
-    console.log('hola')
     const nuevaFecha = new Fecha(
         fechaInicio.value,
         fechaFin.value,
@@ -260,7 +254,6 @@ function crearFecha(){
         icon: "success"
     });
     cerrarModalFecha();
-    console.log(fecha)
 }
 
 
@@ -272,6 +265,3 @@ function abrirModalFecha(){
 function cerrarModalFecha(){
     modalFechaOfertas.hide();
 }
-
-
-console.log(window.location)

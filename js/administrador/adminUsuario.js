@@ -1,6 +1,6 @@
 import Usuario from "../classUsuario.js";
 
-let usuario = []
+let usuario = JSON.parse(localStorage.getItem('usuario')) || [];
 
 crearUsuario();
 

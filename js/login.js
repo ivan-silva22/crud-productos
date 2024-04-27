@@ -34,5 +34,4 @@ function prepararFormLogin(e){
         alert.innerHTML = 'El email o contraseña es invalido';
         alert.className = 'alert alert-danger '
     }
-    console.log(usuarioBuscado)
 }
