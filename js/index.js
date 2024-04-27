@@ -10,7 +10,7 @@ function cargaInicial() {
   if (listaProductos.length > 0) {
     listaProductos.map((producto) => crearCard(producto));
   }else{
-    
+    localStorage.setItem('listaProductos', JSON.stringify(listaProductos));
   }
 }
 
@@ -18,7 +18,7 @@ function cargarFecha() {
   if (Object.keys(fecha). length > 0) {
     fechaOferta.innerHTML = `<p class="color-texto fs-5">Validas desde ${fecha.fechaInicio} al ${fecha.fechaFin} de ${fecha.mes} del ${fecha.anio}</p>`;
   }else{
-    fechaOferta.innerHTML = '<p>No hay datos</p>'
+    fechaOferta.innerHTML = '<p class="color-texto fs-5">No hay datos</p>'
   }
 }
 
