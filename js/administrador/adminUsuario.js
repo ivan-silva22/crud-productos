@@ -4,7 +4,6 @@ let usuario = JSON.parse(localStorage.getItem('usuario')) || [];
 
 crearUsuario();
 
-
 export default function crearUsuario(){
     const nuevoUsuario = new Usuario(
         undefined,

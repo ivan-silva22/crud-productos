@@ -1,3 +1,4 @@
+import Producto from "./classProducto.js";
 let listaProductos = JSON.parse(localStorage.getItem("listaProductos")) || [];
 let fecha = JSON.parse(localStorage.getItem("fecha")) || [];
 let fechaOferta = document.getElementById("fechaOferta");
@@ -9,8 +10,6 @@ cargarFecha();
 function cargaInicial() {
   if (listaProductos.length > 0) {
     listaProductos.map((producto) => crearCard(producto));
-  }else{
-    localStorage.setItem('listaProductos', JSON.stringify(listaProductos));
   }
 }
 
