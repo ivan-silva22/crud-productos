@@ -5,14 +5,17 @@ let fechaOferta = document.getElementById("fechaOferta");
 cargaInicial();
 cargarFecha();
 
+
 function cargaInicial() {
   if (listaProductos.length > 0) {
     listaProductos.map((producto) => crearCard(producto));
+  }else{
+    
   }
 }
 
 function cargarFecha() {
-  if (fecha !== 0) {
+  if (Object.keys(fecha). length > 0) {
     fechaOferta.innerHTML = `<p class="color-texto fs-5">Validas desde ${fecha.fechaInicio} al ${fecha.fechaFin} de ${fecha.mes} del ${fecha.anio}</p>`;
   }else{
     fechaOferta.innerHTML = '<p>No hay datos</p>'

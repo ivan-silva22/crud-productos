@@ -232,8 +232,7 @@ function cargaInicialFecha(){
 
 function cargarFecha(fecha){
     let mostrarFecha = document.getElementById('mostrarFecha');
-    mostrarFecha.innerHTML = `<p>Ofertas validas desde ${fecha.fechaInicio} al ${fecha.fechaFin} de ${fecha.mes} del ${fecha.anio}</p>`
-    
+    mostrarFecha.innerHTML = `<p>Ofertas validas desde ${fecha.fechaInicio} al ${fecha.fechaFin} de ${fecha.mes} del ${fecha.anio}</p>`   
 }
 
 
