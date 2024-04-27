@@ -1,5 +1,5 @@
 let listaProductos = JSON.parse(localStorage.getItem("listaProductos")) || [];
-let listaFecha = JSON.parse(localStorage.getItem("listaFecha")) || [];
+let fecha = JSON.parse(localStorage.getItem("fecha")) || [];
 let fechaOferta = document.getElementById("fechaOferta");
 
 cargaInicial();
@@ -12,10 +12,8 @@ function cargaInicial() {
 }
 
 function cargarFecha() {
-  if (listaFecha.length > 0) {
-    listaFecha.map((fecha) => {
-      fechaOferta.innerHTML = `<p class="color-texto fs-5">Validas desde ${fecha.fechaInicio} al ${fecha.fechaFin} de ${fecha.mes} del ${fecha.anio}</p>`;
-    });
+  if (fecha !== 0) {
+    fechaOferta.innerHTML = `<p class="color-texto fs-5">Validas desde ${fecha.fechaInicio} al ${fecha.fechaFin} de ${fecha.mes} del ${fecha.anio}</p>`;
   }
 }
 

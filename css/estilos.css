@@ -38,6 +38,12 @@ main{
     margin: 0 auto;
 }
 
+.card img{
+    margin: 5px auto;
+    width: 120px;
+    height: 120px;
+}
+
 .card-precio{
     display: inline;
     text-align: center;
