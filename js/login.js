@@ -10,9 +10,9 @@ formLogin.addEventListener('submit', prepararFormLogin);
 
 if (!localStorage.getItem('usuario')) {
     // Datos predeterminados
-    let usuario = {usuario};
+    let datos = {usuario};
     // Guardar los datos predeterminados en localStorage
-    localStorage.setItem('usuario', JSON.stringify(usuario));
+    localStorage.setItem('usuario', JSON.stringify(datos));
   }
 
 
