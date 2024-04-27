@@ -1,5 +1,3 @@
-import Usuario from "./classUsuario.js";
-
 let usuario = JSON.parse(localStorage.getItem('usuario')) || [];
 let usuarioLogueado = JSON.parse(sessionStorage.getItem('usuarioLogueado')) || [];
 let email = document.getElementById('email');
