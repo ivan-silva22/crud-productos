@@ -8,6 +8,15 @@ let formLogin = document.getElementById('formLogin');
 formLogin.addEventListener('submit', prepararFormLogin);
 
 
+if (!localStorage.getItem('usuario')) {
+    // Datos predeterminados
+    let usuario = {usuario};
+    // Guardar los datos predeterminados en localStorage
+    localStorage.setItem('usuario', JSON.stringify(usuario));
+  }
+
+
+
 function prepararFormLogin(e){
     e.preventDefault();
     const usuarioBuscado = usuario.find((usuario) => {
